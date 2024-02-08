@@ -1,0 +1,15 @@
+.table {
+
+    background-color: $darken-blue;
+
+    > :not(caption) {
+
+        > * {
+            > * {
+                background-color: $darken-blue;
+            }
+        }
+
+    }
+
+}

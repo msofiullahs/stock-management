@@ -1,0 +1,124 @@
+body {
+    background-color: $dark-blue;
+
+    a.fc-event{
+
+        &:hover{
+            cursor: pointer;
+        }
+
+    }
+
+    .fc {
+
+        .fc-day{
+            &grid-day{
+
+                &-number {
+                    text-decoration: none;
+                    color: inherit;
+
+                    &:hover{
+                        // cursor: pointer;
+                        cursor: default;
+                        pointer-events: none;
+                    }
+
+                }
+
+                &.fc-day-today{
+                    background-color: var(--bs-secondary);
+                }
+
+            }
+
+            &grid-event {
+                background-color: $red;
+                color: white;
+
+                .fc-event-time{
+                    font-weight: bold;
+                }
+
+                .fc-event-title{
+                    font-weight: 300;
+                }
+            }
+
+            &grid-event-dot{
+                display: none;
+            }
+        }
+
+        .fc-col-header-cell-cushion {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .fc-button-primary{
+
+            &:focus{
+                box-shadow: none;
+            }
+
+        }
+
+    }
+
+    .form-control {
+        font-weight: 300;
+    }
+
+    .custom-dropzone {
+        border-style: dashed;
+        border-width: 3px;
+        padding: 20px;
+        color:rgb(114, 114, 114);
+        height: 25rem;
+    }
+
+    #nprogress {
+        .bar {
+            height: 5px !important;
+            background: $red !important;
+        }
+    }
+
+    .ql-snow {
+        .ql-stroke {
+            stroke: $gray-100;
+
+            .ql-fill {
+                fill: $gray-100;
+            }
+        }
+
+        .ql-fill {
+            fill: $gray-100;
+        }
+
+        .ql-picker {
+            color: $gray-100;
+
+            &-label {
+                border-color: $gray-100;
+            }
+        }
+
+        &.ql-toolbar {
+            .ql-picker {
+                &-label {
+                    border-color: $gray-100;
+
+                    &:hover {
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
+
+        .ql-picker-options {
+            background-color: $dark-blue;
+        }
+    }
+}

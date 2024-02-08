@@ -1,0 +1,36 @@
+.sidebar{
+
+    background-color: $darker-blue;
+
+    &-heading{
+        font-size: .75rem;
+    }
+
+    .nav-link {
+        font-size: .875rem;
+        font-weight: 300;
+        letter-spacing: 1px;
+
+        &.active{
+
+            &:hover{
+                cursor: default;
+            }
+
+            pointer-events: none;
+        }
+    }
+
+    .offcanvas-md {
+        background-color: $darker-blue;
+    }
+
+}
+
+.color-opt {
+    width: 15px;
+    height: 15px;
+    display: inline-flex;
+    margin-right: 5px;
+    border-radius: 3px;
+}

@@ -1,0 +1,13 @@
+.authclass {
+
+    .card {
+
+        background-color: transparent;
+
+        .form {
+            background-color: $dark-blue;
+            background-image: var(--bs-gradient)!important;
+        }
+    }
+
+}
