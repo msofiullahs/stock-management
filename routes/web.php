@@ -37,9 +37,16 @@ Route::middleware([
 ])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('home');
 
+    Route::get('category/ajax', [CategoryController::class, 'ajaxCategories'])->name('catAjax');
     Route::resource('category', CategoryController::class);
+
+    Route::get('product/generate-code', [ProductController::class, 'codeGenerate'])->name('codeGenerate');
+    Route::get('product/check-code', [ProductController::class, 'codeCheck'])->name('codeCheck');
     Route::resource('product', ProductController::class);
+
     Route::resource('stock', StockController::class);
+
     Route::resource('price', PriceController::class);
+
     Route::resource('user', UserController::class);
 });

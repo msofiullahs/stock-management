@@ -13,7 +13,7 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = Category::whereNull('deleted_at');
+        $categories = Category::orderBy('category_name', 'ASC');
 
         if ($request->has('search') && !empty($request->search)) {
             $word = $request->search;
@@ -82,5 +82,16 @@ class CategoryController extends Controller
         $category->delete();
 
         return back();
+    }
+
+    public function ajaxCategories(Request $request)
+    {
+        $categories = Category::orderBy('category_name');
+        if ($request->has('search') && !empty($request->search)) {
+            $word = $request->search;
+            $categories = $categories->where('category_name', 'LIKE', '%'.$word.'%');
+        }
+        $categories = $categories->select('id as value', 'category_name as label', 'disabled')->get();
+        return response()->json($categories);
     }
 }

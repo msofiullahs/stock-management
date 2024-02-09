@@ -34,3 +34,19 @@
     margin-right: 5px;
     border-radius: 3px;
 }
+
+.text-smaller {
+    font-size: smaller;
+}
+
+.multiselect {
+    background: inherit;
+
+    .multiselect-tags-search {
+        background: inherit;
+    }
+
+    &-dropdown {
+        background: var(--bs-body-bg);
+    }
+}

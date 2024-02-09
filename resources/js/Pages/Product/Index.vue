@@ -6,7 +6,7 @@ import Pagination from '@/Components/Pagination.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faMagnifyingGlassArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare, faTrashCan, faEye } from '@fortawesome/free-regular-svg-icons';
-import CategoryForm from './CategoryForm.vue';
+import ProductForm from './ProductForm.vue';
 
 library.add(
     faMagnifyingGlassArrowRight,
@@ -16,11 +16,13 @@ library.add(
 )
 
 const props = defineProps({
-    categories: Object
+    products: Object
 });
 
+console.log('products', props.products);
+
 let formModal = ref(null);
-const formCat = (itemId, title) => {
+const formProduct = (itemId, title) => {
     formModal.value.showModal(itemId, title);
 }
 
@@ -32,16 +34,16 @@ const reloadTable = async () => {
 }
 
 const deleteItem = (id) => {
-    router.delete(route('category.destroy', {id: id}), {preserveScroll: true});
+    router.delete(route('product.destroy', {id: id}), {preserveScroll: true});
 }
 
 </script>
 
 <template>
-    <AppLayout title="Product Categories">
+    <AppLayout title="Products">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Product Categories</h1>
-            <button type="button" class="btn btn-outline-light" @click="formCat(0, null)">Add</button>
+            <h1 class="h2">Products</h1>
+            <button type="button" class="btn btn-outline-light" @click="formProduct(0, null)">Add</button>
         </div>
 
         <div v-if="renderComponent" class="table-responsive small">
@@ -49,28 +51,33 @@ const deleteItem = (id) => {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Category</th>
+                        <th>Image</th>
+                        <th>Code</th>
+                        <th>Product</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in categories.data" :key="item.id">
+                    <tr v-for="item in products.data" :key="item.id">
                         <td>{{ item.id }}</td>
-                        <td>{{ item.category_name }}</td>
+                        <td><img :src="item.thumbnail" width="20" height="20" /></td>
+                        <td>{{ item.product_code }}</td>
+                        <td>{{ item.product_name }}</td>
                         <td>
-                            <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="formCat(item.id, item.category_name)">
+                            <!-- <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="formCat(item.id, item.category_name)">
                                 <font-awesome-icon :icon="['far', 'pen-to-square']" />
                             </button>
                             <span class="text-secondary mx-1">&#9475;</span>
                             <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="deleteItem(item.id)">
                                 <font-awesome-icon :icon="['far', 'trash-can']" />
-                            </button>
+                            </button> -->
+                            test
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <Pagination class="mt-5" :links="categories.links" />
-        <CategoryForm ref="formModal" @posted="reloadTable"></CategoryForm>
+        <Pagination class="mt-5" :links="products.links" />
+        <ProductForm ref="formModal" @posted="reloadTable"></ProductForm>
     </AppLayout>
 </template>
