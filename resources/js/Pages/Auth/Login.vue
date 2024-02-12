@@ -103,7 +103,7 @@ const passwordToggle = () => {
                 <div class="col-sm-3"></div>
                 <div class="col-sm-9">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" vv-model:checked="form.remember" name="remember" id="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" v-model="form.remember" name="remember" id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">
                             Remember me
                         </label>

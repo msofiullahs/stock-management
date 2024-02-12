@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, router } from '@inertiajs/vue3';
 import { Modal } from 'bootstrap';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -33,12 +33,34 @@ const showModal = (catId, title) => {
 defineExpose({ showModal: showModal });
 
 const submitForm = () => {
-    form.post(route('category.store'), {
-        onSuccess: () => {
-            form.reset();
-            postedData();
-        }
-    })
+    if (itemId !== 0) {
+        form.transform((data) => ({
+            ...data
+        }))
+        .put(route('category.update', {id: itemId}), {
+            onSuccess: () => {
+                form.reset();
+                postedData();
+            }
+        })
+        router.post(route('category.update', {id: itemId}), {
+            _method: 'put',
+            forceFormData: true,
+            category_name: form.category_name
+        }, {
+            onSuccess: () => {
+                form.reset();
+                postedData();
+            }
+        })
+    } else {
+        form.post(route('category.store'), {
+            onSuccess: () => {
+                form.reset();
+                postedData();
+            }
+        })
+    }
 }
 
 const postedData = () => {

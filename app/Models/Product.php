@@ -33,6 +33,11 @@ class Product extends Model implements HasMedia
         return $this->hasMany(Stock::class, 'product_id', 'id');
     }
 
+    // public function categoryObjects()
+    // {
+    //     return $this->belongsToMany(Category::class, 'product_categories')->select('categories.id');
+    // }
+
     public function prices()
     {
         return $this->hasMany(ProductPrice::class, 'product_id', 'id');

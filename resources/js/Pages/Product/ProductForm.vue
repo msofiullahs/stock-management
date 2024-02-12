@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { onMounted, ref, watch, reactive } from 'vue';
+import { useForm, router } from '@inertiajs/vue3';
 import { Modal } from 'bootstrap';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -26,12 +26,28 @@ onMounted(() => {
 });
 
 let modalTitle = 'Add Product';
-let itemId = 0;
-const showModal = (productId) => {
-    if (productId !== 0) {
-        itemId = productId;
+let productId = 0;
+let tempCode = null;
+let productImg = ref(null);
+
+const showModal = (productData) => {
+    if (productData !== undefined) {
+        modalTitle = 'Edit Product';
+        productId = productData.id;
+        tempCode = productData.product_code;
+        form.product_code = productData.product_code;
+        form.product_name = productData.product_name;
+        form.categories = productData.categoryIds;
+        productImg.value = productData.thumbnail;
     }
     thisModalObj.show();
+}
+
+const closeModal = () => {
+    productId = 0;
+    tempCode = null;
+    form.reset();
+    thisModalObj.hide();
 }
 
 const getCatOptions = () => {
@@ -44,18 +60,33 @@ const getCatOptions = () => {
 defineExpose({ showModal: showModal });
 
 const submitForm = () => {
-    form.post(route('product.store'), {
-        onSuccess: () => {
-            form.reset();
-            postedData();
-        }
-    })
+    if (productId !== 0 ) {
+        router.post(route('product.update', {id: productId}), {
+            _method: 'put',
+            forceFormData: true,
+            product_code: form.product_code,
+            product_name: form.product_name,
+            categories: form.categories,
+            product_img: form.product_img,
+        }, {
+            onSuccess: () => {
+                form.reset();
+                postedData();
+            }
+        })
+    } else {
+        form.post(route('product.store'), {
+            onSuccess: () => {
+                form.reset();
+                postedData();
+            }
+        })
+    }
 }
 
 const postedData = () => {
     emit('posted', true);
-    form.reset();
-    thisModalObj.hide();
+    closeModal();
 }
 
 const getCode = () => {
@@ -69,7 +100,7 @@ const getCode = () => {
 let isUsed = ref(false);
 let warnMsg = 'This code is already used!';
 watch(() => form.product_code, (newVal) => {
-    if (newVal !== null) {
+    if (newVal !== null && newVal !== tempCode) {
         if (newVal.length == 8) {
             axios.get(route('codeCheck', {product_code: newVal}))
                 .then(resp => {
@@ -82,9 +113,7 @@ watch(() => form.product_code, (newVal) => {
     }
 })
 
-let productImg = ref(null);
 const onDrop = (acceptFiles, rejectReasons) => {
-    console.log(acceptFiles);
     // console.log(rejectReasons);
     const file = acceptFiles[0];
     productImg.value = URL.createObjectURL(file);
@@ -96,13 +125,13 @@ const { getRootProps, getInputProps, ...rest } = useDropzone({
 </script>
 
 <template>
-    <form @submit.prevent="submitForm">
+    <form @submit.prevent="submitForm" enctype="multipart/form-data">
         <div class="modal fade" tabindex="-1" aria-hidden="true" ref="modalEle">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">{{ modalTitle }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" @click="closeModal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
@@ -137,6 +166,8 @@ const { getRootProps, getInputProps, ...rest } = useDropzone({
                                 :options="getCatOptions"
                                 mode="tags"
                                 class="mt-1 form-control p-0"
+                                valueProp="id"
+                                label="category_name"
                                 searchable
                             ></Multiselect>
                         </div>

@@ -7,6 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faMagnifyingGlassArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare, faTrashCan, faEye } from '@fortawesome/free-regular-svg-icons';
 import ProductForm from './ProductForm.vue';
+import axios from 'axios';
 
 library.add(
     faMagnifyingGlassArrowRight,
@@ -19,11 +20,18 @@ const props = defineProps({
     products: Object
 });
 
-console.log('products', props.products);
-
 let formModal = ref(null);
-const formProduct = (itemId, title) => {
-    formModal.value.showModal(itemId, title);
+const formProduct = (itemId) => {
+    if (itemId !== 0) {
+        axios.get(route('product.edit', {id: itemId}))
+            .then(resp => {
+                console.log("DATA", resp.data);
+                formModal.value.showModal(resp.data);
+            });
+    } else {
+        formModal.value.showModal();
+    }
+
 }
 
 const renderComponent = ref(true);
@@ -43,7 +51,7 @@ const deleteItem = (id) => {
     <AppLayout title="Products">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Products</h1>
-            <button type="button" class="btn btn-outline-light" @click="formProduct(0, null)">Add</button>
+            <button type="button" class="btn btn-outline-light" @click="formProduct(0)">Add</button>
         </div>
 
         <div v-if="renderComponent" class="table-responsive small">
@@ -64,14 +72,13 @@ const deleteItem = (id) => {
                         <td>{{ item.product_code }}</td>
                         <td>{{ item.product_name }}</td>
                         <td>
-                            <!-- <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="formCat(item.id, item.category_name)">
+                            <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="formProduct(item.id)">
                                 <font-awesome-icon :icon="['far', 'pen-to-square']" />
                             </button>
                             <span class="text-secondary mx-1">&#9475;</span>
                             <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="deleteItem(item.id)">
                                 <font-awesome-icon :icon="['far', 'trash-can']" />
-                            </button> -->
-                            test
+                            </button>
                         </td>
                     </tr>
                 </tbody>

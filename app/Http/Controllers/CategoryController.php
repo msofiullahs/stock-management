@@ -91,7 +91,7 @@ class CategoryController extends Controller
             $word = $request->search;
             $categories = $categories->where('category_name', 'LIKE', '%'.$word.'%');
         }
-        $categories = $categories->select('id as value', 'category_name as label', 'disabled')->get();
+        $categories = $categories->get();
         return response()->json($categories);
     }
 }

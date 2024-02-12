@@ -68,7 +68,11 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::with('categories')->find($id);
+        $categories = $product->categories->pluck('id');
+        $product->categoryIds = $categories;
+
+        return response()->json($product);
     }
 
     /**
@@ -76,7 +80,21 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $product = Product::find($id);
+        $product->product_code = $request->product_code;
+        $product->product_name = $request->product_name;
+
+        if ($request->hasFile('product_img')) {
+            $product->clearMediaCollection('images');
+            $product->addMediaFromRequest('product_img')->toMediaCollection('images');
+        }
+
+        if ($product->save()) {
+            $categories = $request->categories;
+            $product->categories()->sync($categories);
+            return back()->with('posted', $product);
+        }
+        return back()->with('posted', 'failed');
     }
 
     /**
@@ -84,7 +102,9 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+        return back();
     }
 
     public function codeGenerate()
