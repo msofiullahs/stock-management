@@ -16,6 +16,7 @@ return new class extends Migration
             $table->bigInteger('product_id');
             $table->bigInteger('supplier_id')->nullable();
             $table->bigInteger('price_id')->nullable();
+            $table->bigInteger('numb_of_stock')->nullable();
             $table->enum('stock_type', ['in', 'out'])->default('in');
             $table->text('stock_note')->nullable();
             $table->dateTime('expired_at')->nullable();

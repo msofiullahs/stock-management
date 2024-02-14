@@ -8,7 +8,7 @@ import Banner from '@/Components/Banner.vue';
 import NavLink from '@/Components/NavLink.vue';
 // import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import {faBars, faHouse, faGauge, faArrowRightFromBracket, faBrain, faCubesStacked, faBox, faMoneyBill, faChartLine} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faHouse, faGauge, faArrowRightFromBracket, faBrain, faCubesStacked, faBox, faMoneyBill, faChartLine, faParachuteBox} from '@fortawesome/free-solid-svg-icons';
 import {faObjectGroup, faCircleUser} from '@fortawesome/free-regular-svg-icons';
 
 defineProps({
@@ -27,6 +27,7 @@ library.add(
     faMoneyBill,
     faCircleUser,
     faChartLine,
+    faParachuteBox,
 );
 
 // const showingNavigationDropdown = ref(false);
@@ -101,18 +102,23 @@ const logout = () => {
                                         </NavLink>
                                     </li>
                                     <li class="nav-item">
+                                        <NavLink :href="route('supplier.index')" :active="route().current('supplier.*')">
+                                            <font-awesome-icon :icon="['fas', 'parachute-box']" /> Suppliers
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item">
                                         <NavLink :href="route('product.index')" :active="route().current('product.*')">
                                             <font-awesome-icon :icon="['fas', 'box']" /> Products
                                         </NavLink>
                                     </li>
                                     <li class="nav-item">
-                                        <NavLink :href="route('stock.index')" :active="route().current('stock.*')">
-                                            <font-awesome-icon :icon="['fas', 'cubes-stacked']" /> Product Stocks
+                                        <NavLink :href="route('price.index')" :active="route().current('price.*')">
+                                            <font-awesome-icon :icon="['fas', 'money-bill']" /> Product Prices
                                         </NavLink>
                                     </li>
                                     <li class="nav-item">
-                                        <NavLink :href="route('price.index')" :active="route().current('price.*')">
-                                            <font-awesome-icon :icon="['fas', 'money-bill']" /> Stock Price
+                                        <NavLink :href="route('stock.index')" :active="route().current('stock.*')">
+                                            <font-awesome-icon :icon="['fas', 'cubes-stacked']" /> Product Stocks
                                         </NavLink>
                                     </li>
                                     <li class="nav-item">

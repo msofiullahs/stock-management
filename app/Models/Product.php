@@ -9,13 +9,15 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Product extends Model implements HasMedia
 {
     use HasFactory, SoftDeletes, InteractsWithMedia;
 
     protected $appends = [
-        'thumbnail'
+        'thumbnail',
+        'label'
     ];
 
     public function categories()
@@ -57,5 +59,12 @@ class Product extends Model implements HasMedia
             return $this->getMedia('images')->first()->getUrl('preview');
         }
         return url('assets/no-img.jpg');
+    }
+
+    protected function label(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->product_code.' - '.$this->product_name
+        );
     }
 }

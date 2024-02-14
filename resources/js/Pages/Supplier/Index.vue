@@ -6,8 +6,8 @@ import Pagination from '@/Components/Pagination.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faMagnifyingGlassArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare, faTrashCan, faEye } from '@fortawesome/free-regular-svg-icons';
-import ProductForm from './ProductForm.vue';
 import axios from 'axios';
+import SupplierForm from './SupplierForm.vue';
 
 library.add(
     faMagnifyingGlassArrowRight,
@@ -17,15 +17,15 @@ library.add(
 )
 
 const props = defineProps({
-    products: Object
+    suppliers: Object
 });
 
 let search = defineModel();
 
 let formModal = ref(null);
-const formProduct = (itemId) => {
+const formSupplier = (itemId) => {
     if (itemId !== 0) {
-        axios.get(route('product.edit', {id: itemId}))
+        axios.get(route('supplier.edit', {id: itemId}))
             .then(resp => {
                 formModal.value.showModal(resp.data);
             });
@@ -43,21 +43,21 @@ const reloadTable = async () => {
 }
 
 const deleteItem = (id) => {
-    router.delete(route('product.destroy', {id: id}), {preserveScroll: true});
+    router.delete(route('supplier.destroy', {id: id}), {preserveScroll: true});
 }
 
 </script>
 
 <template>
-    <AppLayout title="Products">
+    <AppLayout title="Suppliers">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Products</h1>
-            <button type="button" class="btn btn-outline-light" @click="formProduct(0)">Add</button>
+            <h1 class="h2">Suppliers</h1>
+            <button type="button" class="btn btn-outline-light" @click="formSupplier(0)">Add</button>
         </div>
 
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Search product name or product code" aria-label="Search Keyword" v-model="search">
-            <Link :href="route('product.index')" :data="{ search }" preserve-state class="btn btn-outline-secondary">
+            <input type="text" class="form-control" placeholder="Search supplier name or supplier code" aria-label="Search Keyword" v-model="search">
+            <Link :href="route('supplier.index')" :data="{ search }" preserve-state class="btn btn-outline-secondary">
                 <font-awesome-icon :icon="['fas', 'magnifying-glass-arrow-right']" />
             </Link>
         </div>
@@ -66,21 +66,23 @@ const deleteItem = (id) => {
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Image</th>
                         <th>Code</th>
-                        <th>Product</th>
+                        <th>Supplier</th>
+                        <th>Phone</th>
+                        <th>PIC</th>
+                        <th>PIC Phone</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in products.data" :key="item.id">
-                        <td>{{ item.id }}</td>
-                        <td><img :src="item.thumbnail" width="20" height="20" /></td>
-                        <td>{{ item.product_code }}</td>
-                        <td>{{ item.product_name }}</td>
+                    <tr v-for="item in suppliers.data" :key="item.id">
+                        <td>{{ item.supplier_code }}</td>
+                        <td>{{ item.supplier_name }}</td>
+                        <td>{{ item.supplier_phone }}</td>
+                        <td>{{ item.pic_name }}</td>
+                        <td>{{ item.pic_phone }}</td>
                         <td class="text-center">
-                            <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="formProduct(item.id)">
+                            <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="formSupplier(item.id)">
                                 <font-awesome-icon :icon="['far', 'pen-to-square']" />
                             </button>
                             <span class="text-secondary mx-1">&#9475;</span>
@@ -92,7 +94,7 @@ const deleteItem = (id) => {
                 </tbody>
             </table>
         </div>
-        <Pagination class="mt-5" :links="products.links" />
-        <ProductForm ref="formModal" @posted="reloadTable"></ProductForm>
+        <Pagination class="mt-5" :links="suppliers.links" />
+        <SupplierForm ref="formModal" @posted="reloadTable"></SupplierForm>
     </AppLayout>
 </template>

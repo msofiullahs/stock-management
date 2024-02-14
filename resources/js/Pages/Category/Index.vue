@@ -1,6 +1,6 @@
 <script setup>
 import { ref, nextTick } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -18,6 +18,8 @@ library.add(
 const props = defineProps({
     categories: Object
 });
+
+let search = defineModel();
 
 let formModal = ref(null);
 const formCat = (itemId, title) => {
@@ -44,6 +46,13 @@ const deleteItem = (id) => {
             <button type="button" class="btn btn-outline-light" @click="formCat(0, null)">Add</button>
         </div>
 
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search category name" aria-label="RSearch Keyword" v-model="search">
+            <Link :href="route('category.index')" :data="{ search }" preserve-state class="btn btn-outline-secondary">
+                <font-awesome-icon :icon="['fas', 'magnifying-glass-arrow-right']" />
+            </Link>
+        </div>
+
         <div v-if="renderComponent" class="table-responsive small">
             <table class="table table-striped">
                 <thead>
@@ -57,7 +66,7 @@ const deleteItem = (id) => {
                     <tr v-for="item in categories.data" :key="item.id">
                         <td>{{ item.id }}</td>
                         <td>{{ item.category_name }}</td>
-                        <td>
+                        <td class="text-center">
                             <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="formCat(item.id, item.category_name)">
                                 <font-awesome-icon :icon="['far', 'pen-to-square']" />
                             </button>

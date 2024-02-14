@@ -1,6 +1,7 @@
 .sidebar{
 
     background-color: $darker-blue;
+    min-height: 93vh;
 
     &-heading{
         font-size: .75rem;
@@ -43,6 +44,10 @@
     background: inherit;
 
     .multiselect-tags-search {
+        background: inherit;
+    }
+
+    &-search {
         background: inherit;
     }
 

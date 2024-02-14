@@ -125,4 +125,19 @@ class ProductController extends Controller
         $result = Product::where('product_code', $code)->exists();
         return response()->json($result);
     }
+
+    public function ajaxProducts(Request $request)
+    {
+        $products = Product::orderBy('product_name', 'ASC');
+
+        if ($request->has('search') && !empty($request->search)) {
+            $word = $request->search;
+            $products = $products->where('product_name', 'LIKE', '%'.$word.'%')
+                ->orWhere('product_code', 'LIKE', '%'.$word.'%');
+        }
+
+        $products = $products->select('id', 'product_code', 'product_name')->get();
+
+        return response()->json($products);
+    }
 }

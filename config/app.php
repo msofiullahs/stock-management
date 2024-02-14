@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Jakarta',
 
     /*
     |--------------------------------------------------------------------------
@@ -186,5 +186,15 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Additional App Configs
+    |--------------------------------------------------------------------------
+    */
+
+    'currency' => env('APP_CURRENCY', 'IDR'),
+    'decimal_separator' => env('DECIMAL_SEPARATOR', ','),
+    'thousand_separator' => env('THOUSAND_SEPARATOR', '.'),
 
 ];

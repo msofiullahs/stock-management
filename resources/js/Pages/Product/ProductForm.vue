@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, reactive } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useForm, router } from '@inertiajs/vue3';
 import { Modal } from 'bootstrap';
 import InputError from '@/Components/InputError.vue';
@@ -156,7 +156,7 @@ const { getRootProps, getInputProps, ...rest } = useDropzone({
                                 class="mt-1 form-control"
                                 required
                             />
-                            <InputError class="mt-1" :message="form.errors.title" />
+                            <InputError class="mt-1" :message="form.errors.product_name" />
                         </div>
                         <div class="mb-3">
                             <InputLabel for="categories" value="Categories" />
