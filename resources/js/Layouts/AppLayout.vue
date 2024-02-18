@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import Banner from '@/Components/Banner.vue';
 // import Dropdown from '@/Components/Dropdown.vue';
@@ -40,9 +40,15 @@ library.add(
 //     });
 // };
 
+const mycopy = (valStr) => {
+    return atob(valStr);
+}
+
 const logout = () => {
     router.post(route('logout'));
 };
+
+const userProps = usePage().props.auth.user;
 </script>
 
 <template>
@@ -96,37 +102,37 @@ const logout = () => {
                                             <font-awesome-icon :icon="['fas', 'gauge']" /> Dashboard
                                         </NavLink>
                                     </li>
-                                    <li class="nav-item">
+                                    <li v-if="'category' in userProps.access_items" class="nav-item">
                                         <NavLink :href="route('category.index')" :active="route().current('category.*')">
                                             <font-awesome-icon :icon="['far', 'object-group']" /> Product Categories
                                         </NavLink>
                                     </li>
-                                    <li class="nav-item">
+                                    <li v-if="'supplier' in userProps.access_items" class="nav-item">
                                         <NavLink :href="route('supplier.index')" :active="route().current('supplier.*')">
                                             <font-awesome-icon :icon="['fas', 'parachute-box']" /> Suppliers
                                         </NavLink>
                                     </li>
-                                    <li class="nav-item">
+                                    <li v-if="'product' in userProps.access_items" class="nav-item">
                                         <NavLink :href="route('product.index')" :active="route().current('product.*')">
                                             <font-awesome-icon :icon="['fas', 'box']" /> Products
                                         </NavLink>
                                     </li>
-                                    <li class="nav-item">
+                                    <li v-if="'price' in userProps.access_items" class="nav-item">
                                         <NavLink :href="route('price.index')" :active="route().current('price.*')">
                                             <font-awesome-icon :icon="['fas', 'money-bill']" /> Product Prices
                                         </NavLink>
                                     </li>
-                                    <li class="nav-item">
+                                    <li v-if="'stock' in userProps.access_items" class="nav-item">
                                         <NavLink :href="route('stock.index')" :active="route().current('stock.*')">
                                             <font-awesome-icon :icon="['fas', 'cubes-stacked']" /> Product Stocks
                                         </NavLink>
                                     </li>
-                                    <li class="nav-item">
-                                        <NavLink :href="'#'">
+                                    <li v-if="'report' in userProps.access_items" class="nav-item">
+                                        <NavLink :href="route('report')" :active="route().current('report')">
                                             <font-awesome-icon :icon="['fas', 'chart-line']" /> Report
                                         </NavLink>
                                     </li>
-                                    <li class="nav-item">
+                                    <li v-if="'user' in userProps.access_items" class="nav-item">
                                         <NavLink :href="route('user.index')" :active="route().current('user.*')">
                                             <font-awesome-icon :icon="['far', 'circle-user']" /> Users
                                         </NavLink>
@@ -162,7 +168,7 @@ const logout = () => {
                                 <small>&copy; {{ new Date().getFullYear() }}</small>
                             </div>
                             <div class="col text-end">
-                                <small>Main Authority: Muhammad Sofiullah S.</small>
+                                <small>{{ mycopy('TWFpbiBBdXRob3JpdHk6IE11aGFtbWFkIFNvZml1bGxhaCBTLg==') }}</small>
                             </div>
                         </div>
                     </main>

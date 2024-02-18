@@ -10,6 +10,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Facades\DB;
 
 class Product extends Model implements HasMedia
 {
@@ -17,7 +18,10 @@ class Product extends Model implements HasMedia
 
     protected $appends = [
         'thumbnail',
-        'label'
+        'label',
+        'available_stock',
+        'stock_out',
+        'stock_in',
     ];
 
     public function categories()
@@ -66,5 +70,43 @@ class Product extends Model implements HasMedia
         return new Attribute(
             get: fn () => $this->product_code.' - '.$this->product_name
         );
+    }
+
+    public function getAvailableStockAttribute()
+    {
+        $in = $this->hasMany(Stock::class, 'product_id', 'id')->where('stock_type', 'in')->sum('numb_of_stock');
+        $out = $this->hasMany(Stock::class, 'product_id', 'id')->where('stock_type', 'out')->sum('numb_of_stock');
+        $total = $in - $out;
+
+        return $total;
+    }
+
+    public function getStockOutAttribute()
+    {
+        $out = $this->hasMany(Stock::class, 'product_id', 'id')->where('stock_type', 'out')->sum('numb_of_stock');
+
+        return $out;
+    }
+
+    public function getStockInAttribute()
+    {
+        $in = $this->hasMany(Stock::class, 'product_id', 'id')->where('stock_type', 'in')->sum('numb_of_stock');
+
+        return $in;
+    }
+
+    public function inStocks()
+    {
+        return $this->hasMany(Stock::class, 'product_id', 'id')->where('stock_type', 'in');
+    }
+
+    public function outStocks()
+    {
+        return $this->hasMany(Stock::class, 'product_id', 'id')->where('stock_type', 'out');
+    }
+
+    public function stockDate()
+    {
+        return $this->hasMany(Stock::class, 'product_id', 'id')->groupBy(DB::raw('Date(tms_booking.created_at)'));
     }
 }

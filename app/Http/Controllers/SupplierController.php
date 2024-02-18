@@ -15,6 +15,7 @@ class SupplierController extends Controller
     {
         $suppliers = Supplier::orderBy('supplier_name', 'ASC');
 
+        $word = null;
         if ($request->has('search') && !empty($request->search)) {
             $word = $request->search;
             $suppliers = $suppliers->where('supplier_name', 'LIKE', '%'.$word.'%')
@@ -22,6 +23,9 @@ class SupplierController extends Controller
         }
 
         $suppliers = $suppliers->paginate(20);
+        if (!empty($word)) {
+            $suppliers = $suppliers->appends(['search'=>$word]);
+        }
 
         return Inertia::render('Supplier/Index', ['suppliers' => $suppliers]);
     }

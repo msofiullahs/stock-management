@@ -13,6 +13,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         Inertia::share('timezone', config('app.timezone'));
+        Inertia::share('currency', config('app.currency'));
     }
 
     /**

@@ -22,15 +22,6 @@ use Inertia\Inertia;
 |
 */
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -54,7 +45,9 @@ Route::middleware([
     Route::get('supplier/ajax', [SupplierController::class, 'ajaxSuppliers'])->name('supplierAjax');
     Route::resource('supplier', SupplierController::class)->except(['create', 'show']);
 
-    Route::resource('stock', StockController::class);
+    Route::resource('stock', StockController::class)->except(['create', 'show']);
 
     Route::resource('user', UserController::class);
+
+    Route::get('report', [DashboardController::class, 'reporting'])->name('report');
 });

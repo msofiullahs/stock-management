@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -57,5 +58,20 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'access_items'
     ];
+
+    protected $with = ['role'];
+
+    public function role()
+    {
+        return $this->hasOne(Role::class, 'id', 'role_id');
+    }
+
+    public function accessItems(): Attribute
+    {
+        return new Attribute(
+            get: fn () => json_decode($this->role->access_items)
+        );
+    }
 }

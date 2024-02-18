@@ -15,6 +15,7 @@ class ProductController extends Controller
     {
         $products = Product::orderBy('product_name', 'ASC');
 
+        $word = null;
         if ($request->has('search') && !empty($request->search)) {
             $word = $request->search;
             $products = $products->where('product_name', 'LIKE', '%'.$word.'%')
@@ -22,6 +23,9 @@ class ProductController extends Controller
         }
 
         $products = $products->paginate(20);
+        if (!empty($word)) {
+            $products = $products->appends(['search'=>$word]);
+        }
 
         return Inertia::render('Product/Index', ['products' => $products]);
     }
@@ -50,6 +54,8 @@ class ProductController extends Controller
         if ($product->save()) {
             $categories = $request->categories;
             $product->categories()->sync($categories);
+            $suppliers = $request->suppliers;
+            $product->suppliers()->sync($suppliers);
             return back()->with('posted', $product);
         }
         return back()->with('posted', 'failed');
@@ -68,9 +74,11 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::with('categories')->find($id);
+        $product = Product::with(['categories', 'suppliers'])->find($id);
         $categories = $product->categories->pluck('id');
+        $suppliers = $product->suppliers->pluck('id');
         $product->categoryIds = $categories;
+        $product->supplierIds = $suppliers;
 
         return response()->json($product);
     }
@@ -92,6 +100,8 @@ class ProductController extends Controller
         if ($product->save()) {
             $categories = $request->categories;
             $product->categories()->sync($categories);
+            $suppliers = $request->suppliers;
+            $product->suppliers()->sync($suppliers);
             return back()->with('posted', $product);
         }
         return back()->with('posted', 'failed');

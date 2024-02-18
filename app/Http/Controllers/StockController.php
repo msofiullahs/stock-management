@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use App\Models\Stock;
 
@@ -15,6 +16,7 @@ class StockController extends Controller
     {
         $stocks = Stock::with(['product', 'price', 'supplier'])->orderBy('created_at', 'DESC');
 
+        $word = null;
         if ($request->has('search') && !empty($request->search)) {
             $word = $request->search;
             $stocks = $stocks->whereHas('product', function($q) use($word) {
@@ -24,6 +26,9 @@ class StockController extends Controller
         }
 
         $stocks = $stocks->paginate(20);
+        if (!empty($word)) {
+            $stocks = $stocks->appends(['search'=>$word]);
+        }
 
         return Inertia::render('Stock/Index', ['stocks' => $stocks]);
     }
@@ -51,6 +56,16 @@ class StockController extends Controller
         $stock->expired_at = $request->expired_at;
 
         if ($stock->save()) {
+            $countRel = DB::table('product_suppliers')
+                ->where('product_id', $stock->product_id)
+                ->where('supplier_id', $stock->supplier_id)
+                ->count();
+            if ($countRel < 1) {
+                DB::table('product_suppliers')->insert([
+                    'product_id'    => $stock->product_id,
+                    'supplier_id'   => $stock->supplier_id
+                ]);
+            }
             return back()->with('posted', $stock);
         }
         return back()->with('posted', 'failed');
@@ -88,6 +103,16 @@ class StockController extends Controller
         $stock->expired_at = $request->expired_at;
 
         if ($stock->save()) {
+            $countRel = DB::table('product_suppliers')
+                ->where('product_id', $stock->product_id)
+                ->where('supplier_id', $stock->supplier_id)
+                ->count();
+            if ($countRel < 1) {
+                DB::table('product_suppliers')->insert([
+                    'product_id'    => $stock->product_id,
+                    'supplier_id'   => $stock->supplier_id
+                ]);
+            }
             return back()->with('posted', $stock);
         }
         return back()->with('posted', 'failed');

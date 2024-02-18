@@ -1,6 +1,6 @@
 <script setup>
 import { ref, nextTick, defineModel } from 'vue';
-import { Link, router } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -46,13 +46,14 @@ const deleteItem = (id) => {
     router.delete(route('price.destroy', {id: id}), {preserveScroll: true});
 }
 
+const userProps = usePage().props.auth.user.access_items.price;
 </script>
 
 <template>
     <AppLayout title="Product Prices">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Product Prices</h1>
-            <button type="button" class="btn btn-outline-light" @click="formPrice(0)">Add</button>
+            <button v-if="userProps.includes('add')" type="button" class="btn btn-outline-light" @click="formPrice(0)">Add</button>
         </div>
 
         <div class="input-group mb-3">
@@ -80,13 +81,15 @@ const deleteItem = (id) => {
                         <td class="text-end">{{ item.curr_price }}</td>
                         <td class="text-center">{{ item.price_type }}</td>
                         <td class="text-center">
-                            <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="formPrice(item.id)">
+                            <button v-if="userProps.includes('edit')" type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="formPrice(item.id)">
                                 <font-awesome-icon :icon="['far', 'pen-to-square']" />
                             </button>
-                            <span class="text-secondary mx-1">&#9475;</span>
-                            <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="deleteItem(item.id)">
-                                <font-awesome-icon :icon="['far', 'trash-can']" />
-                            </button>
+                            <template v-if="userProps.includes('delete')">
+                                <span class="text-secondary mx-1">&#9475;</span>
+                                <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="deleteItem(item.id)">
+                                    <font-awesome-icon :icon="['far', 'trash-can']" />
+                                </button>
+                            </template>
                         </td>
                     </tr>
                 </tbody>

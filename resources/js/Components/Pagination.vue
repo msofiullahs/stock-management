@@ -21,7 +21,7 @@ defineProps({
                 </template>
                 <template v-else>
                     <li class="page-item">
-                        <Link class="page-link" :href="pageItem.url" :html="pageItem.label" />
+                        <a class="page-link" :href="pageItem.url" v-html="pageItem.label" />
                     </li>
                 </template>
             </template>

@@ -18,6 +18,7 @@ const form = useForm({
     product_code: '',
     product_name: '',
     categories: null,
+    suppliers: null,
     product_img: null,
 });
 
@@ -38,6 +39,7 @@ const showModal = (productData) => {
         form.product_code = productData.product_code;
         form.product_name = productData.product_name;
         form.categories = productData.categoryIds;
+        form.suppliers = productData.supplierIds;
         productImg.value = productData.thumbnail;
     }
     thisModalObj.show();
@@ -52,6 +54,13 @@ const closeModal = () => {
 
 const getCatOptions = () => {
     return axios.get(route('catAjax'))
+        .then(resp => {
+            return resp.data
+        })
+}
+
+const getSupOptions = () => {
+    return axios.get(route('supplierAjax'))
         .then(resp => {
             return resp.data
         })
@@ -168,6 +177,19 @@ const { getRootProps, getInputProps, ...rest } = useDropzone({
                                 class="mt-1 form-control p-0"
                                 valueProp="id"
                                 label="category_name"
+                                searchable
+                            ></Multiselect>
+                        </div>
+                        <div class="mb-3">
+                            <InputLabel for="suppliers" value="Suppliers" />
+                            <Multiselect
+                                id="suppliers"
+                                v-model="form.suppliers"
+                                :options="getSupOptions"
+                                mode="tags"
+                                class="mt-1 form-control p-0"
+                                valueProp="id"
+                                label="supplier_name"
                                 searchable
                             ></Multiselect>
                         </div>

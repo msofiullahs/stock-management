@@ -44,13 +44,18 @@ const reloadTable = async () => {
     renderComponent.value = true;
 }
 
+const deleteItem = (id) => {
+    router.delete(route('stock.destroy', {id: id}), {preserveScroll: true});
+}
+
+const userProps = usePage().props.auth.user.access_items.stock;
 </script>
 
 <template>
     <AppLayout title="Product Stocks">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Product Stocks</h1>
-            <button type="button" class="btn btn-outline-light" @click="formStock(0)">Add</button>
+            <button v-if="userProps.includes('add')" type="button" class="btn btn-outline-light" @click="formStock(0)">Add</button>
         </div>
 
         <div class="input-group mb-3">
@@ -82,13 +87,15 @@ const reloadTable = async () => {
                         <td class="text-end">{{ moment.tz(item.created_at, $inertia.page.props.timezone).format('DD/MM/YYYY HH:mm:ss') }}</td>
                         <td class="text-end">{{ moment.tz(item.updated_at, $inertia.page.props.timezone).format('DD/MM/YYYY HH:mm:ss') }}</td>
                         <td class="text-center">
-                            <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="formStock(item.id)">
+                            <button v-if="userProps.includes('edit')" type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="formStock(item.id)">
                                 <font-awesome-icon :icon="['far', 'pen-to-square']" />
                             </button>
-                            <!-- <span class="text-secondary mx-1">&#9475;</span>
-                            <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="deleteItem(item.id)">
-                                <font-awesome-icon :icon="['far', 'trash-can']" />
-                            </button> -->
+                            <template v-if="userProps.includes('delete')">
+                                <span class="text-secondary mx-1">&#9475;</span>
+                                <button type="button" class="btn btn-sm p-0" style="line-height: 1;" @click="deleteItem(item.id)">
+                                    <font-awesome-icon :icon="['far', 'trash-can']" />
+                                </button>
+                            </template>
                         </td>
                     </tr>
                 </tbody>

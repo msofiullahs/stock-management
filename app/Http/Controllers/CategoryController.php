@@ -15,12 +15,16 @@ class CategoryController extends Controller
     {
         $categories = Category::orderBy('category_name', 'ASC');
 
+        $word = null;
         if ($request->has('search') && !empty($request->search)) {
             $word = $request->search;
             $categories = $categories->where('category_name', 'LIKE', '%'.$word.'%');
         }
 
         $categories = $categories->paginate(20);
+        if (!empty($word)) {
+            $categories = $categories->appends(['search'=>$word]);
+        }
 
         return Inertia::render('Category/Index', ['categories' => $categories]);
     }

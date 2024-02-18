@@ -193,6 +193,8 @@ return [
     |--------------------------------------------------------------------------
     */
 
+    'admin_email' => env('ADMIN_EMAIL', 'sofiullah.work@gmail.com'),
+    'admin_pass' => env('ADMIN_PASSWORD', 'admin1234'),
     'currency' => env('APP_CURRENCY', 'IDR'),
     'decimal_separator' => env('DECIMAL_SEPARATOR', ','),
     'thousand_separator' => env('THOUSAND_SEPARATOR', '.'),

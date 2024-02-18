@@ -14,6 +14,8 @@ class PriceController extends Controller
     public function index(Request $request)
     {
         $prices = ProductPrice::with('product')->orderBy('created_at', 'DESC');
+
+        $word = null;
         if ($request->has('search') && !empty($request->search)) {
             $word = $request->search;
             $prices = $prices->whereHas('product', function($q) use($word) {
@@ -21,7 +23,11 @@ class PriceController extends Controller
                 ->orWhere('product_code', 'LIKE', '%'.$word.'%');
             });
         }
+
         $prices = $prices->paginate(20);
+        if (!empty($word)) {
+            $prices = $prices->appends(['search'=>$word]);
+        }
 
         return Inertia::render('Price/Index', ['prices' => $prices]);
     }
