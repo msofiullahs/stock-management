@@ -112,4 +112,6 @@ return [
 
     'password_timeout' => 10800,
 
+    'enable_2fa' => env('ENABLE_2FA', false)
+
 ];

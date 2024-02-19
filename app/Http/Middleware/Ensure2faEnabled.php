@@ -16,9 +16,11 @@ class Ensure2faEnabled
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = Auth::user();
-        if (empty($user->two_factor_secret)) {
-            return redirect()->route('profile.show');
+        if (config('auth.enable_2fa')) {
+            $user = Auth::user();
+            if (empty($user->two_factor_secret)) {
+                return redirect()->route('profile.show');
+            }
         }
         return $next($request);
     }

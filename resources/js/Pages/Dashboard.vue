@@ -52,14 +52,14 @@ const chartData = {
             backgroundColor: 'transparent',
             data: props.stockIn,
             borderWidth: 3,
-            borderColor: '#198754',
+            borderColor: '#0C6DFD',
         },
         {
             label: 'Stock Out',
             backgroundColor: 'transparent',
             data: props.stockOut,
             borderWidth: 3,
-            borderColor: '#6f42c1',
+            borderColor: '#FFC007',
         }
     ]
 };
