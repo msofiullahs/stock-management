@@ -26,6 +26,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    '2faEnable',
 ])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('home');
 

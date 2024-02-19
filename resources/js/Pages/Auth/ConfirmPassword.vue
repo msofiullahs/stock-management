@@ -33,7 +33,7 @@ const submit = () => {
             <AuthenticationCardLogo />
         </template>
 
-        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400" style="max-width: 30rem;">
             This is a secure area of the application. Please confirm your password before continuing.
         </div>
 
@@ -45,7 +45,7 @@ const submit = () => {
                     ref="passwordInput"
                     v-model="form.password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="form-control"
                     required
                     autocomplete="current-password"
                     autofocus
@@ -53,10 +53,10 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
-            <div class="flex justify-end mt-4">
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+            <div class="d-flex justify-content-end mt-4">
+                <button class="btn btn-outline-light" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Confirm
-                </PrimaryButton>
+                </button>
             </div>
         </form>
     </AuthenticationCard>

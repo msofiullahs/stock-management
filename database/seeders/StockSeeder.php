@@ -34,7 +34,7 @@ class StockSeeder extends Seeder
                     'product_id'    => $productId,
                     'price_id'      => $price->id,
                     'numb_of_stock' => random_int(100, 999),
-                    'stock_type'    => 'in',
+                    'stock_type'    => 'out',
                     'created_at'    => $dateTime,
                     'updated_at'    => $dateTime
                 ]);

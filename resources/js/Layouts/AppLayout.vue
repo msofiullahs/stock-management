@@ -70,7 +70,8 @@ const userProps = usePage().props.auth.user;
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
                             <h6 class="dropdown-header">Manage Account</h6>
-                            <Link class="dropdown-item" :href="route('user.edit', {id: $inertia.page.props.auth.user.id})">Profile</Link>
+                            <Link class="dropdown-item" :href="route('user.edit', {id: $inertia.page.props.auth.user.id})">Account</Link>
+                            <Link class="dropdown-item" :href="route('profile.show')">Profile</Link>
                             <Link class="dropdown-item" :href="route('user.editpassword')">Change Password</Link>
                             <Link class="dropdown-item" v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">API Tokens</Link>
                             <form @submit.prevent="logout">
