@@ -4,12 +4,12 @@
 This is application for simple stock management, please feel free to contact me on sofiullah.work@gmail.com for modification or customization. This application is built using Laravel 10 and Jetstream-Inertia. Please follow Laravel's requirement, before starting installation.
 
 ## Preview
-<iframe src="https://drive.google.com/file/d/1M34oby8Yjb-5_mUymU8xzm8Pz2DjAOJP/preview" width="640" height="480" allow="autoplay"></iframe>
-<iframe src="https://drive.google.com/file/d/1Eff8Di4Pqx8T68QU-1WtEFB2RLeTc0zi/preview" width="640" height="480" allow="autoplay"></iframe>
-<iframe src="https://drive.google.com/file/d/135rNrVRX290QyV2BMBSm89qsLEASyUsZ/preview" width="640" height="480" allow="autoplay"></iframe>
-<iframe src="https://drive.google.com/file/d/1zpf_77GiFtyQMKQWlU4ZLUVel3RnmPNx/preview" width="640" height="480" allow="autoplay"></iframe>
-<iframe src="https://drive.google.com/file/d/1oarXwDyAwPgG4RuDAJHTKZgrxyoAmEAY/preview" width="640" height="480" allow="autoplay"></iframe>
-<iframe src="https://drive.google.com/file/d/14CUJlHOSbMrwx8At63ch_6gjOXzYwXbn/preview" width="640" height="480" allow="autoplay"></iframe>
+<img src="https://drive.google.com/uc?export=view&id=1M34oby8Yjb-5_mUymU8xzm8Pz2DjAOJP" />
+<img src="https://drive.google.com/uc?export=view&id=1M34o1Eff8Di4Pqx8T68QU-1WtEFB2RLeTc0zi" />
+<img src="https://drive.google.com/uc?export=view&id=135rNrVRX290QyV2BMBSm89qsLEASyUsZ" />
+<img src="https://drive.google.com/uc?export=view&id=1zpf_77GiFtyQMKQWlU4ZLUVel3RnmPNx" />
+<img src="https://drive.google.com/uc?export=view&id=1oarXwDyAwPgG4RuDAJHTKZgrxyoAmEAY" />
+<img src="https://drive.google.com/uc?export=view&id=14CUJlHOSbMrwx8At63ch_6gjOXzYwXbn" />
 
 ## Installation
 - Clone this project
