@@ -5,7 +5,7 @@ This is application for simple stock management, please feel free to contact me 
 
 ## Preview
 <img src="https://drive.google.com/uc?export=view&id=1M34oby8Yjb-5_mUymU8xzm8Pz2DjAOJP" />
-<img src="https://drive.google.com/uc?export=view&id=1M34o1Eff8Di4Pqx8T68QU-1WtEFB2RLeTc0zi" />
+<img src="https://drive.google.com/uc?export=view&id=1Eff8Di4Pqx8T68QU-1WtEFB2RLeTc0zi" />
 <img src="https://drive.google.com/uc?export=view&id=135rNrVRX290QyV2BMBSm89qsLEASyUsZ" />
 <img src="https://drive.google.com/uc?export=view&id=1zpf_77GiFtyQMKQWlU4ZLUVel3RnmPNx" />
 <img src="https://drive.google.com/uc?export=view&id=1oarXwDyAwPgG4RuDAJHTKZgrxyoAmEAY" />
