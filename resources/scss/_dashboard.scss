@@ -1,7 +1,7 @@
 .sidebar{
 
     background-color: $darker-blue;
-    min-height: 93vh;
+    // min-height: 93vh;
 
     &-heading{
         font-size: .75rem;
@@ -26,6 +26,12 @@
         background-color: $darker-blue;
     }
 
+}
+
+@include media-breakpoint-up(md) {
+    .sidebar {
+        min-height: 93vh;
+    }
 }
 
 .color-opt {

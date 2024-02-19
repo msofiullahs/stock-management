@@ -4,4 +4,19 @@
     .dropdown-menu{
         background-color: $darken-blue;
     }
+
+    .navbar-brand {
+        h3 {
+            font-size: calc(1rem + 0.6vw);
+            margin: 0;
+        }
+    }
+
+    @include media-breakpoint-up(md) {
+        .navbar-brand {
+            h3 {
+                font-size: calc(1.3rem + 0.6vw);
+            }
+        }
+    }
 }
