@@ -7,7 +7,15 @@ This is application for simple stock management, please feel free to contact me 
 - Clone this project
 - `cd /path-to-this-project`
 - `cp .env-example .env`
-- Update value on `.env` file
+- You must update value on `.env` file
+    - APP_NAME=
+    - APP_TIMEZONE= #--- please follow TZ Identifier [here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+    - ENABLE_2FA=true #--- true or false, make it true if you want to force enabling 2fa for all users
+    - ADMIN_EMAIL="admin@mail.com" #--- this email will be used for seeder on first user
+    - ADMIN_PASSWORD="yourpassword" #--- this password will be used for seeder on first user
+    - APP_CURRENCY="IDR" #--- use your currency
+    - DECIMAL_SEPARATOR="," #--- either comma or dot
+    - THOUSAND_SEPARATOR="." #--- either comma or dot
 - `php artisan key:generate`
 - `composer install`
 - `npm install`
