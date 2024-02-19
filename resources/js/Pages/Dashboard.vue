@@ -29,7 +29,19 @@ const props = defineProps({
 });
 
 const chartOptions = {
-    responsive: true
+    responsive: true,
+    scales: {
+        x: {
+            grid: {
+                color: "#495057"
+            }
+        },
+        y: {
+            grid: {
+                color: "#495057"
+            }
+        }
+    }
 };
 
 const chartData = {

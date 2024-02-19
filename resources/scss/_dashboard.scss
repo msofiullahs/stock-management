@@ -61,3 +61,15 @@
         background: none;
     }
 }
+
+.card {
+    .card {
+        &-header{
+            background-color: $darker-blue;
+        }
+
+        &-body{
+            background-color: $darken-blue;
+        }
+    }
+}
