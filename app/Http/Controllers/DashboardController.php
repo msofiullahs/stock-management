@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Carbon\Carbon;
 use App\Models\Stock;
+use App\Models\StockLog;
 
 class DashboardController extends Controller
 {
@@ -39,6 +40,24 @@ class DashboardController extends Controller
         }
 
         return Inertia::render('Report/Index', ['reports' => $reports]);
+    }
+
+    public function logs(Request $request)
+    {
+        $start = Carbon::now()->subMonth()->format('Y-m-d');
+        $end = Carbon::now()->format('Y-m-d');
+        if ($request->has('date') && !empty($request->date)) {
+            $dates = $request->date;
+            $start = Carbon::parse($dates[0])->format('Y-m-d');
+            $end = Carbon::parse($dates[1])->format('Y-m-d');
+        }
+
+        $logs = StockLog::with(['user', 'stock'])
+            ->orderBy('created_at', 'ASC')
+            ->whereBetween('created_at', [$start, $end])
+            ->paginate(20)->appends(['date' => [$start, $end]]);
+
+        return Inertia::render('Log/Index', ['logs' => $logs]);
     }
 
 }

@@ -5,15 +5,14 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faMagnifyingGlassArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { faPenToSquare, faTrashCan, faEye } from '@fortawesome/free-regular-svg-icons';
+import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import ProductForm from './ProductForm.vue';
 import axios from 'axios';
 
 library.add(
     faMagnifyingGlassArrowRight,
     faPenToSquare,
-    faTrashCan,
-    faEye
+    faTrashCan
 )
 
 const props = defineProps({

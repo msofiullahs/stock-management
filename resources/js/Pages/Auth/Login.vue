@@ -65,7 +65,7 @@ const passwordToggle = () => {
                         autofocus
                         autocomplete="username"
                     />
-                    <InputError class="mt-2" :message="form.errors.email" />
+                    <InputError :message="form.errors.email" />
                 </div>
             </div>
 
@@ -95,7 +95,7 @@ const passwordToggle = () => {
                             <font-awesome-icon :icon="['far', seePassword ? 'eye-slash' : 'eye']" />
                         </button>
                     </div>
-                    <InputError class="mt-2" :message="form.errors.password" />
+                    <InputError :message="form.errors.password" />
                 </div>
             </div>
 

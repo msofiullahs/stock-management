@@ -55,3 +55,9 @@
         background: var(--bs-body-bg);
     }
 }
+
+.list-group-flush {
+    .list-group-item {
+        background: none;
+    }
+}

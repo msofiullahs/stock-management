@@ -47,7 +47,12 @@ Route::middleware([
 
     Route::resource('stock', StockController::class)->except(['create', 'show']);
 
+    Route::get('user/roles', [UserController::class, 'getRoles'])->name('roles');
+    Route::get('user/role-info/{id}', [UserController::class, 'getRoleInfo'])->name('rolesInfo');
+    Route::get('user/change-password', [UserController::class, 'editPass'])->name('user.editpassword');
+    Route::post('user/change-password', [UserController::class, 'updatePass'])->name('user.updatepass');
     Route::resource('user', UserController::class);
 
     Route::get('report', [DashboardController::class, 'reporting'])->name('report');
+    Route::get('log', [DashboardController::class, 'logs'])->name('log');
 });

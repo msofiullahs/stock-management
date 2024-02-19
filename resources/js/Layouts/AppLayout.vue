@@ -9,7 +9,7 @@ import NavLink from '@/Components/NavLink.vue';
 // import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {faBars, faHouse, faGauge, faArrowRightFromBracket, faBrain, faCubesStacked, faBox, faMoneyBill, faChartLine, faParachuteBox} from '@fortawesome/free-solid-svg-icons';
-import {faObjectGroup, faCircleUser} from '@fortawesome/free-regular-svg-icons';
+import {faObjectGroup, faCircleUser, faClock} from '@fortawesome/free-regular-svg-icons';
 
 defineProps({
     title: String,
@@ -28,6 +28,7 @@ library.add(
     faCircleUser,
     faChartLine,
     faParachuteBox,
+    faClock,
 );
 
 // const showingNavigationDropdown = ref(false);
@@ -69,7 +70,8 @@ const userProps = usePage().props.auth.user;
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
                             <h6 class="dropdown-header">Manage Account</h6>
-                            <Link class="dropdown-item" :href="route('profile.show')">Profile</Link>
+                            <Link class="dropdown-item" :href="route('user.edit', {id: $inertia.page.props.auth.user.id})">Profile</Link>
+                            <Link class="dropdown-item" :href="route('user.editpassword')">Change Password</Link>
                             <Link class="dropdown-item" v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">API Tokens</Link>
                             <form @submit.prevent="logout">
                                 <button href="#" class="dropdown-item" type="submit">
@@ -132,6 +134,11 @@ const userProps = usePage().props.auth.user;
                                             <font-awesome-icon :icon="['fas', 'chart-line']" /> Report
                                         </NavLink>
                                     </li>
+                                    <li v-if="'logs' in userProps.access_items" class="nav-item">
+                                        <NavLink :href="route('log')" :active="route().current('log')">
+                                            <font-awesome-icon :icon="['far', 'clock']" /> Stock Logs
+                                        </NavLink>
+                                    </li>
                                     <li v-if="'user' in userProps.access_items" class="nav-item">
                                         <NavLink :href="route('user.index')" :active="route().current('user.*')">
                                             <font-awesome-icon :icon="['far', 'circle-user']" /> Users
@@ -140,16 +147,6 @@ const userProps = usePage().props.auth.user;
                                 </ul>
                                 <hr class="my-3" />
                                 <ul class="nav flex-column">
-                                    <!-- <li class="nav-item">
-                                        <NavLink href="#">
-                                            <font-awesome-icon :icon="['fas', 'sliders']" /> Settings
-                                        </NavLink>
-                                    </li>
-                                    <li class="nav-item">
-                                        <NavLink href="#">
-                                            <font-awesome-icon :icon="['fas', 'brain']" /> Master Data
-                                        </NavLink>
-                                    </li> -->
                                     <li class="nav-item">
                                         <form @submit.prevent="logout">
                                             <NavLink href="#" as="button">
